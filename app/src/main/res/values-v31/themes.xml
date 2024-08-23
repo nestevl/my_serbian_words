@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SplashScreen1" parent="Theme.MySerbianWords">
+
+        <item name="android:windowSplashScreenBackground">@color/splash</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/cat</item>
+    </style>
+
+
+
+    <!--    <style name="Theme.SplashScreen" parent="Base.Theme.MySerbianWords">-->
+<!--        <item name="android:windowSplashScreenBackground">@color/splash</item>-->
+<!--        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">-->
+<!--            @drawable/baseline_thumb_up_alt_24-->
+<!--        </item>-->
+<!--    </style>-->
+</resources>
