@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 
@@ -25,6 +26,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.LocalTextStyle
@@ -34,9 +36,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
@@ -82,7 +86,7 @@ class RepeatCompose : ComponentActivity() {
         val list = remember {
             mutableStateOf(emptyList<Word>())
         }
-        fs.collection("Lekcija 4 Moja porodica").get()
+        fs.collection(lesson.title).get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     list.value = task.result.toObjects(Word::class.java)
@@ -98,8 +102,9 @@ class RepeatCompose : ComponentActivity() {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(),
-                state=listState
+                    .fillMaxHeight()
+                    .horizontalScroll(rememberScrollState()),
+                // state=listState
 
             ) {
 
@@ -146,14 +151,20 @@ class RepeatCompose : ComponentActivity() {
     fun ProfileScreenLayout(
         word: Word, modifier: Modifier = Modifier
     ) {
-        var textOnButton by remember { mutableStateOf("Проверить") }
+        var showDetails by rememberSaveable { mutableStateOf(false) }
+        var textOnButton: String by rememberSaveable {
+            mutableStateOf("Проверить")
+        }
+        val buttonColor = remember { mutableStateOf(Color.Blue) }
 
 //       val word = list.value.get(index)
 //        if (word.index_word == index) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(10.dp)
+                .padding(30.dp)
+                .border(width = 2.dp, color = Color.Black)
+                .shadow(3.dp)
 
 
         ) {
@@ -172,7 +183,8 @@ class RepeatCompose : ComponentActivity() {
                     modifier = Modifier
                         .height(300.dp)
                         .width(300.dp)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(10.dp)
 
 //                        contentScale = ContentScale.Crop,
                     // alignment = Alignment.CenterVertically,
@@ -187,12 +199,17 @@ class RepeatCompose : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth()
+                    .align(Alignment.CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(30.dp))
             if (value1.equals("repeat")) {
                 Button(
-                    onClick = { textOnButton = word.rus_Translate
-                              },
+                    onClick = {
+                        textOnButton = word.rus_Translate
+                        showDetails = true
+                        buttonColor.value = Color.White
+
+                    },
                     modifier = Modifier
                         .fillMaxHeight()
                         .wrapContentWidth()
@@ -200,7 +217,11 @@ class RepeatCompose : ComponentActivity() {
 
 
                 ) {
-                  Text(  textOnButton)
+                    Text(
+                        text = textOnButton,
+                        style = LocalTextStyle.current.copy(fontSize = 20.sp)
+                    )
+
                 }
 
             } else {
@@ -210,6 +231,7 @@ class RepeatCompose : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth()
+                        .align(Alignment.CenterHorizontally)
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))

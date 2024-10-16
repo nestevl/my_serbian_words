@@ -1,5 +1,6 @@
 package com.example.myserbianwords
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -17,19 +18,20 @@ class ChooseLesson : ComponentActivity() {
 
         var bundle: Bundle? = intent.extras
         var message = bundle!!.getString("action") // 1
+        var message_repeat = bundle!!.getString("actionTODO")
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         setContent {
             setContent {
                 MyApp() {
-                 val value: String = message.toString()
-//                    val explicitIntent = Intent(this, RepeatWords::class.java)
-//                    explicitIntent.putExtra("action", value)
-//                    explicitIntent.putExtra("lesson", it)
-//
-//                    /// explicitIntent.putExtra("action", value)
-//                    // explicitIntent.putExtras()
-//                    startActivity(explicitIntent)
-                    startActivity(RepeatCompose.newIntant(this, it,value))
+                    val value_todo = message_repeat.toString();
+                    if (value_todo != null && value_todo.equals("Game")) {
+                        startActivity(GameActivity.newIntant(this, it))
+
+                    } else {
+                        val value: String = message.toString()
+
+                        startActivity(RepeatCompose.newIntant(this, it, value))
+                    }
                 }
             }
 //            val fs = Firebase.firestore
@@ -48,17 +50,17 @@ class ChooseLesson : ComponentActivity() {
 }
 
 
-    @Composable
-    fun MyApp(navigateToLesson: (Lesson) -> Unit) {
-        var text2 = ""
-        Scaffold(
+@Composable
+fun MyApp(navigateToLesson: (Lesson) -> Unit) {
+    var text2 = ""
+    Scaffold(
 
-            content = {
-                LessonContent(navigateToLesson = navigateToLesson)
-            }
+        content = {
+            LessonContent(navigateToLesson = navigateToLesson)
+        }
 
-        )
-    }
+    )
+}
 
 
 

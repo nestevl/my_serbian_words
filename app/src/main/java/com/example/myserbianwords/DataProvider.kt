@@ -23,11 +23,23 @@ object DataProvider {
         ),
         Lesson(
             id = 5,
-            title = "Lekcija 5 Moja porodica",
+            title = "Lekcija 5 Moj svet",
         ),
         Lesson(
             id = 6,
-            title =  "Lekcija 5 Moja porodica",
+            title =  "Lekcija 6 Šta radiš?"
+        ),
+        Lesson(
+            id = 7,
+            title =  "Lekcija 7 Srećan put"
+        ),
+        Lesson(
+            id = 8,
+            title =  "Lekcija 8 Stil života"
+        ),
+        Lesson(
+            id = 0,
+            title =  "Moje reči"
         ),
 
 
