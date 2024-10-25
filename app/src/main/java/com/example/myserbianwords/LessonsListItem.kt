@@ -13,18 +13,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.myserbianwords.data.Lesson
+import com.example.myserbianwords.data.Word
 import com.example.myserbianwords.databinding.LessonsListBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 @Composable
 fun LessonsListItem(lesson:Lesson,navigateToLesson:(Lesson)->Unit) {
-
+    val fs = Firebase.firestore
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp,)
@@ -36,7 +41,9 @@ fun LessonsListItem(lesson:Lesson,navigateToLesson:(Lesson)->Unit) {
 
 
         Row(
-            Modifier.clickable { navigateToLesson(lesson) }
+            Modifier.clickable { navigateToLesson(lesson)
+
+            }
         ) {
 
             Column(

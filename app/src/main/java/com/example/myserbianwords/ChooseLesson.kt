@@ -8,14 +8,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import com.example.myserbianwords.data.Lesson
+import com.example.myserbianwords.data.Word
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ChooseLesson : ComponentActivity() {
     var lesson = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         var bundle: Bundle? = intent.extras
         var message = bundle!!.getString("action") // 1
         var message_repeat = bundle!!.getString("actionTODO")
@@ -25,11 +31,18 @@ class ChooseLesson : ComponentActivity() {
                 MyApp() {
                     val value_todo = message_repeat.toString();
                     if (value_todo != null && value_todo.equals("Game")) {
-                        startActivity(GameActivity.newIntant(this, it))
+
+                        val list = ArrayList<Word>()
+
+                        Firebase.firestore.collection(it.title).get()
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    list.addAll( task.result.toObjects(Word::class.java))
+                                }}
+                                startActivity(GameActivity.newIntant(this, it))
 
                     } else {
                         val value: String = message.toString()
-
                         startActivity(RepeatCompose.newIntant(this, it, value))
                     }
                 }

@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.firebase.storage)
     implementation(libs.coil.compose)
     implementation(libs.androidx.activity)
+    implementation(libs.firebase.database.ktx)
     debugImplementation(libs.ui.tooling)
     implementation(libs.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
