@@ -133,7 +133,7 @@ fun addWord(value: String, setShowDialog: (Boolean) -> Unit, setValue: (String) 
 
                         ),
 
-                        placeholder = { Text(text = "Введи перевод на русском") },
+                        placeholder = { Text(text = "напиши перевод на русском") },
                         value = txtField_ru.value,
                         onValueChange = {
                             txtField_ru.value = it.take(10)
