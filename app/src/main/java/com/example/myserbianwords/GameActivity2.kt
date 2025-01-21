@@ -43,7 +43,7 @@ class GameActivity2 : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
                 val post = dataSnapshot.getValue<Word>()
-               /// list.add(post)
+                list.add(post)
                 // ...
             }
 
